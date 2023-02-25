@@ -3,9 +3,67 @@
 }
 
 .card-items-container {
-    height: 10em;
+    height: 7em;
 }
 
 .MuiCardActionArea-root {
     height: 100%;
+}
+
+
+.title-text-container {
+   height: 100%;
+   display: grid;
+   grid-template-rows: 30% 70%;
+   grid-template-columns: 100%;
+   gap: 0.3em;
+   place-content: center;
+}
+
+.title-text-container > h3 {
+   font-size: 1.7em;
+}
+
+.title-text-container > h6 {
+    font-size: 1em;
+    /* -webkit-line-clamp: 1; */
+    /* -webkit-box-orient: horizontal; */
+    /* overflow: hidden; */
+    text-overflow: initial;
+    line-height: 1.25em;
+    white-space: normal;
+}
+
+.container-card-box {
+    max-width: 6.2em;
+}
+
+@media (max-width: 900px) {
+   
+    .container-card-box {
+        max-width: 100%;
+        width: 80%;
+    }
+
+    .title-text-container {
+        height: 100%;
+        display: grid;
+        grid-template-rows: 100%;
+        grid-template-columns: 70% 30%;
+        gap: 0.3em;
+        place-content: center;
+        grid-template-areas: "description title";
+     }
+
+     .title-text-container > h3 {
+        font-size: 2em;
+        grid-area: title;
+     }
+     
+     .title-text-container > h6 {
+         font-size: 1.4em;
+         grid-area: description;
+     }
+     
+    
 }

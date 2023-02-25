@@ -67,10 +67,10 @@ export default function Dashboard() {
           const { name } = status;
           const statusReport = report[name] || {};
           return (
-            <Grid key={name} item xs={12} sm={6} md={3}>
+            <Grid key={name} item className='container-card-box'>
               <Card width={'100%'} className="card-items-container">
                 <CardActionArea onClick={handleSelect(name)}>
-                  <CardContent>
+                  <CardContent className='title-text-container'>
                     <Typography variant={'h3'} align={'center'}>
                       {statusReport.count || 0}
                     </Typography>
