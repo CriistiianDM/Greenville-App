@@ -5,6 +5,7 @@ export function isAdmin() {
   const admins = [
     'suarez.andres@correounivalle.edu.co',
     'samuel.ramirez@correounivalle.edu.co',
+    'hrdrywall.system@gmail.com'
   ];
   Logger.log('guessEmail');
   Logger.log(guessEmail);
@@ -46,6 +47,7 @@ function getEntityData(entity) {
 function getHousesSheet() {
   Logger.log('=============Getting Houses Sheet===========');
   const sheet = global.getSheetFromSpreadSheet('HOUSES');
+  Logger.log('sheet', sheet);
   const headers = global.getHeadersFromSheet(sheet);
   return { sheet, headers };
 }

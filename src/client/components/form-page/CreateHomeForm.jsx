@@ -49,7 +49,7 @@ export default function CreateHomeForm() {
     try {
       setSubmitting(true);
       setIsLoading(true);
-
+      console.log('formData', formData , 'houseFiles', houseFiles);
       const data = await HouseContext.addHouse({
         files: houseFiles,
         house: formData,
