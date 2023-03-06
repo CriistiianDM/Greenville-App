@@ -13,6 +13,7 @@ import { useHouseDispatch } from '../../context/House';
 import HomeFields from './HomeFields';
 import useHouseForm, { getFormData } from '../../hooks/useHouseForm';
 import FilesFields from './FilesFields';
+import { useHistory } from 'react-router-dom';
 
 export default function CreateHomeForm() {
   const classes = useStyles();
@@ -26,6 +27,10 @@ export default function CreateHomeForm() {
   } = useHouseForm();
   const initialFilesValues = filesGroups.map(g => g.name);
   const initialValues = getInitialValues(initialFilesValues);
+  const history = useHistory();
+  const [reset_form, set_reset_form] = useState({
+    filesGroups: []
+  });
 
   const onSuccess = useCallback(({ data, resetForm }) => {
     openAlert({
@@ -33,6 +38,12 @@ export default function CreateHomeForm() {
       message: `House #${data.idHouse} created successfully!`,
     });
     resetForm(initialValues);
+    //recargar la pagina
+    history.push('/');
+    // set_reset_form({
+    //   ...reset_form,
+    //   filesGroups: []
+    // })
   }, []);
 
   const onError = useCallback((e, msg = '') => {
@@ -132,4 +143,5 @@ export default function CreateHomeForm() {
       </Formik>
     </div>
   );
+  
 }

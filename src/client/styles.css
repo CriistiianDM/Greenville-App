@@ -38,6 +38,17 @@
     max-width: 6.2em;
 }
 
+#title-app-header {
+    cursor: pointer;
+}
+
+#title-app-header:hover , 
+#title-app-header:active {
+    color: #fff;
+    background-color: #8f3c33;
+    transition: all 0.5s;
+}
+
 @media (max-width: 900px) {
    
     .container-card-box {

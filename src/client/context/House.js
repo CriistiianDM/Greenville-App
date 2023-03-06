@@ -82,13 +82,13 @@ function HouseContext({ children }) {
 
   const getHouseFolder = useCallback(async ({ house, files = [] }) => {
     console.log('==== GETTING HOUSE FOLDER ====');
-    const { idHouse, zone, address , lastName } = house;
+    const { idHouse, zone, address , idHr, lastName } = house;
     let houseFolder = '';
     if (files.length) {
       const fileFromDrive = await API.uplaodFilesGroups({
         zone,
         houseFiles: files,
-        idHouse: `${idHouse} / ${lastName}_${zone} / ${address}`,
+        idHouse: `${idHr} / ${lastName} / ${address}`,
       });
       houseFolder = fileFromDrive.folder;
     } else {
@@ -101,7 +101,6 @@ function HouseContext({ children }) {
 
   const addHouse = useCallback(async ({ house, files }) => {
     console.log('==== CREATING HOUSE ====');
-    console.log(`House: crisk`, house)
     const { ok, data } = await API.createHouse(JSON.stringify(house));
     console.log(`Response Data: `, data);
     if (!ok) return { error: data };

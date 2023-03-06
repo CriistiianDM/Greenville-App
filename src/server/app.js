@@ -55,11 +55,11 @@ function getHousesSheet() {
 export function getHouseFiles(house) {
   if (!house.files) return house;
   const newHouse = { ...house };
-  const { idHouse, address, zone } = newHouse;
+  const { idHouse, address, zone , idHr , lastName } = newHouse;
   Logger.log(`newHouse`, newHouse);
   const folder = global.getHouseFolder({
     zone,
-    idHouse: `${idHouse} / ${address}`,
+    idHouse: `${idHr} / ${lastName} / ${address}`,
   });
   const subFolders = folder.getFolders();
   const houseFiles = {};
@@ -174,13 +174,17 @@ function registerHouse(data) {
   };
   const houseValues = global.jsonToSheetValues(houseJSON, headers);
   const zoneValues = global.jsonToSheetValues(houseJSON, zoneHeaders);
+  zoneValues[0] = houseValues[1];
   Logger.log('HOUSE VALUES');
   Logger.log(houseValues);
+  Logger.log(zoneValues);
 
   sheet.appendRow(houseValues);
   zoneSheet.appendRow(zoneValues);
 
-  const valueToExtraSheet = [[houseJSON.idHr, houseJSON.address]];
+  const valueToExtraSheet = [[
+    houseJSON.idHr, houseJSON.address
+  ]];
 
   const extraSheets = new Array(4);
   extraSheets.push('ACCOUNT RECIEVABLE');

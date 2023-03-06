@@ -51,6 +51,7 @@ export default function Navbar() {
             className={classes.title}
             onClick={() => history.push('/')}
             variant="h6"
+            id="title-app-header"
             noWrap
           >
             HR Drywall
@@ -116,7 +117,7 @@ export function SearchBox({ classes }) {
       style={{ width: 300 }}
       onChange={handleChange}
       className={classes.search}
-      getOptionLabel={option => `${option.address} - ${option.builder}`}
+      getOptionLabel={option => `${option.lastName} -  ${option.address} - ${option.builder}`}
       renderInput={params => (
         <TextField
           {...params}

@@ -22,12 +22,18 @@ export default function FilesFields({
   isLoading,
   filesGroups,
   houseSelected = {},
-  setFieldValue,
+  setFieldValue
 }) {
   const classes = useStyles();
   if (!filesGroups || !filesGroups.length) return null;
   const { files: houseFiles, filesGroups: houseFilesGroups } = houseSelected;
   const haveFilesGroups = !!Object.keys(houseFilesGroups || {}).length;
+
+  // set_reset_form({
+  //       ...reset_form,
+  //       filesGroups: filesGroups
+  // })
+
   return (
     <Box width="100%" mt={8}>
       <Accordion>
