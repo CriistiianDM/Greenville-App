@@ -35,6 +35,7 @@ export function getRawDataFromSheet(sheet, url = GENERAL_DB) {
       mSheet.getLastColumn()
     );
   }
+  Logger.log('No sheet found');
   return null;
 }
 

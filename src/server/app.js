@@ -340,6 +340,7 @@ function updateEntity({
   try {
     const response = { ok: false, data: null };
     const form = JSON.parse(serializedData);
+    Logger.log(`Updating34 ${serializedData}`);
     Logger.log(`Submitted Form ${name} Data`);
     Logger.log(form);
     const { data, index } = findEntity(idGetter(form));
@@ -349,7 +350,7 @@ function updateEntity({
     const entityData = global.jsonToSheetValues({ ...data, ...form }, headers);
     Logger.log(`${name} Data`);
     Logger.log(entityData);
-
+    
     entityRange.setValues([entityData]);
 
     response.ok = true;
@@ -455,3 +456,32 @@ export function createHouse(formString) {
     throw error;
   }
 }
+
+export function createCalendarEvent(event_params) {
+  const form = JSON.parse(event_params);
+  if (!form || !Object.keys(form).length) throw new Error('No data sent');
+  
+  const { title, description, start_ , end_, location, email } = form;
+  Logger.log('Data for registering');
+  //mostrar la info en el log
+  Logger.log(form);
+ 
+  const calendar = CalendarApp.getCalendarById('2afa966456e4039a9fca24313ca295c4bcb002fb95600a685e30dc27c44a2c23@group.calendar.google.com');
+  const calendarId = calendar.getId();
+
+  const resource = {
+    summary: title,
+    description,
+    location,
+    start: {
+      dateTime: start_
+    },
+    end: {
+      dateTime: end_
+    }
+  };
+
+  const event = Calendar.Events.insert(resource, calendarId);
+
+  return event;
+};

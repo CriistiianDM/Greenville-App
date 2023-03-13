@@ -24,6 +24,7 @@ export default function UpdateHomeForm({ history }) {
   const [{ houseSelected }, { updateHouse }] = useHouse();
   const dependencies = useHouseForm();
   const initialValues = getInitialValues();
+  console.log('houseSelected update 45', houseSelected,dependencies);
 
   const onSuccess = useCallback(resetForm => {
     openAlert({
@@ -43,11 +44,18 @@ export default function UpdateHomeForm({ history }) {
     console.error(`${message}: `, e);
   }, []);
 
+  //useEffect(() => {
+  React.useEffect(() => {
+     //guardar en la session storage el id de la casa seleccionada
+     sessionStorage.setItem('house_selected', JSON.stringify(houseSelected) );
+  },[]);
+
   const onSubmit = useCallback(async (values, { setSubmitting, resetForm }) => {
     const { houseFiles, formData } = getFormData(values);
     try {
       setSubmitting(true);
       setIsLoading(true);
+      console.log('onSubmit formdara', houseFiles , formData);
       await updateHouse({ files: houseFiles, house: formData });
       onSuccess(resetForm);
     } catch (e) {

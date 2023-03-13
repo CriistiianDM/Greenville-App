@@ -45,3 +45,6 @@ global.setActiveSheet = publicSheetFunctions.setActiveSheet;
 global.getHeadersFromSheet = publicSheetFunctions.getHeadersFromSheet;
 global.jsonToSheetValues = publicSheetFunctions.jsonToSheetValues;
 global.sheetValuesToObject = publicSheetFunctions.sheetValuesToObject;
+
+//calendar functions
+global.createCalendarEvent = publicMainFunction.createCalendarEvent;

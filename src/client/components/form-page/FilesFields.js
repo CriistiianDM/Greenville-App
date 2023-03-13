@@ -28,12 +28,7 @@ export default function FilesFields({
   if (!filesGroups || !filesGroups.length) return null;
   const { files: houseFiles, filesGroups: houseFilesGroups } = houseSelected;
   const haveFilesGroups = !!Object.keys(houseFilesGroups || {}).length;
-
-  // set_reset_form({
-  //       ...reset_form,
-  //       filesGroups: filesGroups
-  // })
-
+  console.log(`FilesGroups`, filesGroups);
   return (
     <Box width="100%" mt={8}>
       <Accordion>
@@ -58,7 +53,7 @@ export default function FilesFields({
             justify="center"
             alignItems="center"
           >
-            {filesGroups.map(f => (
+            {(filesGroups).map(f => (
               <Grid item xs={6} key={f.name}>
                 <Typography variant="h6">{f.name}</Typography>
                 {haveFilesGroups &&

@@ -18,6 +18,7 @@ import useStyles from './styles';
 import { useHouse } from '../../context/House';
 import { useAlertDispatch } from '../../context/Alert';
 import Comment from './Comment';
+import CalendarEvent from './CalendarEvent';
 
 export default function CommentsSection({ isLoading, houseStatuses }) {
   const classes = useStyles();
@@ -26,6 +27,10 @@ export default function CommentsSection({ isLoading, houseStatuses }) {
   const [uploading, setUploading] = useState(false);
   const [reset, setReset] = useState(false);
   const [checked, setChecked] = useState(false);
+  const [calendar_status, set_calendar_status] = useState({
+        checked: false,
+        date: ''
+  });
   const [{ houseSelected }, { updateHouse }] = useHouse();
   const { openAlert } = useAlertDispatch();
   const currentStatusIndex = houseStatuses.findIndex(
@@ -44,7 +49,17 @@ export default function CommentsSection({ isLoading, houseStatuses }) {
     setDescription(value);
   };
 
-  const handleChangeStatus = event => setChecked(event.target.checked);
+  const handleChangeStatus = (event) => {
+      
+      setChecked(event.target.checked);
+      if (event.target.checked) {
+        set_calendar_status({
+           ...calendar_status,
+            checked: true
+        });
+      }
+
+  }
 
   const handleSaveComment = async event => {
     console.log(`houseSelected`, houseSelected);
@@ -53,15 +68,48 @@ export default function CommentsSection({ isLoading, houseStatuses }) {
     try {
       event.stopPropagation();
       setUploading(true);
-      const { idHouse, zone, comments = [], address } = houseSelected;
+      const { idHouse, zone, comments = [], address , lastName , idHr } = houseSelected;
+      console.log('idHr222', houseSelected);
+      //date
+      const date_event = new Date(calendar_status.date);
+      date_event.setHours(new Date().getHours(), new Date().getMinutes());
+  
+      const date_time_start_event = date_event
+      const date_time_finish_event = new Date(calendar_status.date)
+      date_time_finish_event.setHours(23, 59, 59, 999);
+
+      //aumentar 1 dia
+      date_time_finish_event.setDate(date_time_finish_event.getDate() + 1);
+      date_time_start_event.setDate(date_time_start_event.getDate() + 1);
+
       let status = '';
       if (checked) status = newStatus.name;
 
       const { data: comment } = await API.createComment(
         JSON.stringify({ idHouse, description, status })
       );
+      console.log('api calendar_event', date_time_start_event , date_time_finish_event );
       let commentFolder = '';
       console.log('Created Comment: ', comment);
+     
+      await API.createCalendarEvent(
+        JSON.stringify({
+          title: `House ${idHouse} - ${address}`,
+          description: `House ${idHouse} - ${address}`,
+          start_: date_time_start_event,
+          end_: date_time_finish_event,
+          location: address,
+        })
+      );
+
+      let house_selected = JSON.parse(sessionStorage.getItem('house_selected'));
+      const anio = date_time_start_event.getFullYear();
+      const mes = date_time_start_event.getMonth() + 1;
+      const dia = date_time_start_event.getDate();
+      
+      house_selected.dateNextCall = `${anio}-${mes}-${dia}`
+
+      await updateHouse({ house: house_selected });
 
       if (comment && files.length) {
         commentFolder = API.uploadFilesToComment({
@@ -181,6 +229,14 @@ export default function CommentsSection({ isLoading, houseStatuses }) {
           </Grid>
         </AccordionDetails>
       </Accordion>
+      <CalendarEvent 
+        properties={
+           {
+            on_calendar_event_click: calendar_status,
+            set_on_calendar_event_click: set_calendar_status
+          }
+        }
+      />
     </Box>
   );
 }

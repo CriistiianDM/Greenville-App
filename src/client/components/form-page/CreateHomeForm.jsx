@@ -28,9 +28,6 @@ export default function CreateHomeForm() {
   const initialFilesValues = filesGroups.map(g => g.name);
   const initialValues = getInitialValues(initialFilesValues);
   const history = useHistory();
-  const [reset_form, set_reset_form] = useState({
-    filesGroups: []
-  });
 
   const onSuccess = useCallback(({ data, resetForm }) => {
     openAlert({
@@ -40,10 +37,6 @@ export default function CreateHomeForm() {
     resetForm(initialValues);
     //recargar la pagina
     history.push('/');
-    // set_reset_form({
-    //   ...reset_form,
-    //   filesGroups: []
-    // })
   }, []);
 
   const onError = useCallback((e, msg = '') => {

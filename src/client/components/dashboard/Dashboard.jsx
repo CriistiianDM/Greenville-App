@@ -109,6 +109,7 @@ const columns = [
   // { name: 'foot_exterior', label: 'FOOT EXTERIOR' },
   { name: 'builder', label: 'BUILDER' },
   { name: 'zone', label: 'ZONE' },
+  { name: 'dateNextCall', label: 'Date Next Call' },
   { name: 'files', label: 'FILES' },
 ];
 
@@ -148,6 +149,7 @@ function HouseList({ data }) {
                 style={{ cursor: "pointer" }}
                 id={`home-${row.idHouse}`}
                 onClick={handleClick}
+                className="_table-row_"
               >
                 {columns.map(({ name } , index_j) => (
                   <TableCell key={name}> 
