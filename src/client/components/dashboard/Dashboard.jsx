@@ -27,7 +27,7 @@ export default function Dashboard() {
   async function init() {
     try {
       const mStatuses = await API.getHouseStatuses();
-      console.log({ mStatuses });
+      console.log('ummm',{ mStatuses });
       setStatuses([{ name: 'INITIAL' }, ...mStatuses]);
     } catch (error) {
       console.error('Dashboard Error:', error);
@@ -57,7 +57,9 @@ export default function Dashboard() {
         [status]: { data: [...currentData, house], count: currentCount + 1 },
       };
     }, {});
-  console.log({ statuses, report });
+
+  
+  console.log('455555',{ statuses, report });
   const selectedReport = (report[selected] || {}).data || [];
   return (
     <Grid container justify={'center'} spacing={2}>
@@ -98,6 +100,7 @@ export default function Dashboard() {
 }
 
 const columns = [
+  { name: 'dateNextCall', label: 'Date Next Call' },
   { name: 'idHr', label: 'ID HR' },
   { name: 'address', label: 'ADDRESS' },
   { name: 'lastName', label: 'LAST NAME' },
@@ -109,7 +112,6 @@ const columns = [
   // { name: 'foot_exterior', label: 'FOOT EXTERIOR' },
   { name: 'builder', label: 'BUILDER' },
   { name: 'zone', label: 'ZONE' },
-  { name: 'dateNextCall', label: 'Date Next Call' },
   { name: 'files', label: 'FILES' },
 ];
 
@@ -127,7 +129,16 @@ function HouseList({ data }) {
     setHouseSelected(data_house[0]);
        
   };  
+  console.log('data12yyy',data);
 
+  //order by dateNextCall
+  console.log(data.sort((a, b) => {
+  
+    return new Date(a.dateNextCall) - new Date(b.dateNextCall);
+    
+  }),'aaa');
+
+  console.log('wedata12',data);
   return (
     <TableContainer component={Paper} sx={{ m: 2, width: '100%' }}>
       <Table sx={{ maxWidth: 640 }} size="small" aria-label="a dense table">

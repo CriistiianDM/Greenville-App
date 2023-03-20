@@ -62,6 +62,11 @@ export default function HomeFields({
     selectedZone = dependencies.zones.find(z => z.name === inputZone);
   }
 
+  React.useEffect(() => {
+    //guardar el session storage
+    sessionStorage.setItem('zone', JSON.stringify(selectedZone));
+  });
+
   return (
     <>
       <Grid

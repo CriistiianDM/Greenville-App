@@ -55,7 +55,7 @@ export default function UpdateHomeForm({ history }) {
     try {
       setSubmitting(true);
       setIsLoading(true);
-      console.log('onSubmit formdara', houseFiles , formData);
+      
       await updateHouse({ files: houseFiles, house: formData });
       onSuccess(resetForm);
     } catch (e) {
@@ -122,6 +122,10 @@ export default function UpdateHomeForm({ history }) {
                       />
                     </Grid>
                   )}
+                  <Divider variant="middle" />
+                  <div className='_conatiner_date_group_'>
+                        <span><b>Date change status:</b> {houseSelected.dateNextCall}</span>
+                  </div>
                   <Divider variant="middle" />
                   <Grid item xs={12}>
                     <FilesFields

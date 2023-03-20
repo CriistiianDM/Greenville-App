@@ -56,10 +56,10 @@ export function getHouseFiles(house) {
   if (!house.files) return house;
   const newHouse = { ...house };
   const { idHouse, address, zone , idHr , lastName } = newHouse;
-  Logger.log(`newHouse`, newHouse);
+  Logger.log('newHouse');
   const folder = global.getHouseFolder({
     zone,
-    idHouse: `${idHr} / ${lastName} / ${address}`,
+    idHouse: `${idHr} / ${lastName} / ${address}`
   });
   const subFolders = folder.getFolders();
   const houseFiles = {};
@@ -233,6 +233,7 @@ export function registerComment(data) {
   const commentValues = global.jsonToSheetValues(commentJSON, headers);
   Logger.log('COMMENT VALUES');
   Logger.log(commentValues);
+  //commentValues[2] = `${commentValues[2]} - Date change status: ${JSON.parse(sessionStorage.getItem('calendar_status')).date}`;
 
   sheet.appendRow(commentValues);
 
@@ -340,8 +341,6 @@ function updateEntity({
   try {
     const response = { ok: false, data: null };
     const form = JSON.parse(serializedData);
-    Logger.log(`Updating34 ${serializedData}`);
-    Logger.log(`Submitted Form ${name} Data`);
     Logger.log(form);
     const { data, index } = findEntity(idGetter(form));
     if (!index) throw new Error(`${name} does not exists`);
@@ -461,12 +460,13 @@ export function createCalendarEvent(event_params) {
   const form = JSON.parse(event_params);
   if (!form || !Object.keys(form).length) throw new Error('No data sent');
   
-  const { title, description, start_ , end_, location, email } = form;
+  const { title, description, start_ , end_, location, email , idCalendar } = form;
   Logger.log('Data for registering');
   //mostrar la info en el log
   Logger.log(form);
+  Logger.log(idCalendar);
  
-  const calendar = CalendarApp.getCalendarById('2afa966456e4039a9fca24313ca295c4bcb002fb95600a685e30dc27c44a2c23@group.calendar.google.com');
+  const calendar = CalendarApp.getCalendarById(idCalendar);
   const calendarId = calendar.getId();
 
   const resource = {
@@ -474,10 +474,16 @@ export function createCalendarEvent(event_params) {
     description,
     location,
     start: {
-      dateTime: start_
+      date: start_
     },
     end: {
-      dateTime: end_
+      date: start_
+    },
+    reminders: {
+      useDefault: false,
+      overrides: [
+        { method: 'popup', minutes: 8 * 24 * 60 }
+      ]
     }
   };
 

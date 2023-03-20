@@ -29,7 +29,7 @@ export default function CommentsSection({ isLoading, houseStatuses }) {
   const [checked, setChecked] = useState(false);
   const [calendar_status, set_calendar_status] = useState({
         checked: false,
-        date: ''
+        date: 'aaaa-mm-dd'
   });
   const [{ houseSelected }, { updateHouse }] = useHouse();
   const { openAlert } = useAlertDispatch();
@@ -44,8 +44,9 @@ export default function CommentsSection({ isLoading, houseStatuses }) {
   };
 
   const handleChange = e => {
-    const { value } = e.target;
+    const { value } = e.target ;
     setReset(false);
+    //value += ` Next call: ${calendar_status.date}`;
     setDescription(value);
   };
 
@@ -58,8 +59,18 @@ export default function CommentsSection({ isLoading, houseStatuses }) {
             checked: true
         });
       }
+      else {
+        set_calendar_status({
+          ...calendar_status,
+           date: 'aaaa-mm-dd'
+       });
+      }
 
   }
+
+  React.useEffect(() => {
+    sessionStorage.setItem('calendar_status', JSON.stringify(calendar_status));
+  }, [calendar_status]);
 
   const handleSaveComment = async event => {
     console.log(`houseSelected`, houseSelected);
@@ -68,11 +79,14 @@ export default function CommentsSection({ isLoading, houseStatuses }) {
     try {
       event.stopPropagation();
       setUploading(true);
-      const { idHouse, zone, comments = [], address , lastName , idHr } = houseSelected;
-      console.log('idHr222', houseSelected);
+      const { idHouse, zone, comments = [], address , lastName , idHr  } = houseSelected;
+      
+      setDescription(description + ` Next call: ${calendar_status.date}`);
+
       //date
       const date_event = new Date(calendar_status.date);
-      date_event.setHours(new Date().getHours(), new Date().getMinutes());
+      //date_event.setHours(new Date().getHours(), new Date().getMinutes());
+      date_event.setHours(1, 0, 0, 0);
   
       const date_time_start_event = date_event
       const date_time_finish_event = new Date(calendar_status.date)
@@ -82,34 +96,40 @@ export default function CommentsSection({ isLoading, houseStatuses }) {
       date_time_finish_event.setDate(date_time_finish_event.getDate() + 1);
       date_time_start_event.setDate(date_time_start_event.getDate() + 1);
 
-      let status = '';
-      if (checked) status = newStatus.name;
-
-      const { data: comment } = await API.createComment(
-        JSON.stringify({ idHouse, description, status })
-      );
-      console.log('api calendar_event', date_time_start_event , date_time_finish_event );
-      let commentFolder = '';
-      console.log('Created Comment: ', comment);
-     
-      await API.createCalendarEvent(
-        JSON.stringify({
-          title: `House ${idHouse} - ${address}`,
-          description: `House ${idHouse} - ${address}`,
-          start_: date_time_start_event,
-          end_: date_time_finish_event,
-          location: address,
-        })
-      );
-
       let house_selected = JSON.parse(sessionStorage.getItem('house_selected'));
       const anio = date_time_start_event.getFullYear();
       const mes = date_time_start_event.getMonth() + 1;
       const dia = date_time_start_event.getDate();
       
-      house_selected.dateNextCall = `${anio}-${mes}-${dia}`
 
-      await updateHouse({ house: house_selected });
+      let status = '';
+      if (checked) status = newStatus.name;
+
+      //setDescription(`${description} Next call: ${anio}-${mes}-${dia}`)
+      
+      const { data: comment } = await API.createComment(
+        JSON.stringify({ idHouse, description: `${description} Next call: ${anio}-${mes}-${dia}`, status })
+      );
+      
+      let commentFolder = '';
+   
+      //sacar del session storage la zone
+      const zone_calendar = JSON.parse(sessionStorage.getItem('zone'));
+   
+      if (calendar_status.date != 'aaaa-mm-dd') {
+          await API.createCalendarEvent(
+            JSON.stringify({
+              title: `${idHr} - ${lastName} - ${houseSelected.status}`,
+              description: `House ${idHouse} - ${address}`,
+              start_: `${anio}-${mes}-${dia}`,
+              idCalendar: zone_calendar.idCalendar,
+              end_: date_time_finish_event,
+              location: address
+            })
+          );
+      }
+      
+      house_selected.dateNextCall = `${anio}-${mes}-${dia}`
 
       if (comment && files.length) {
         commentFolder = API.uploadFilesToComment({
@@ -119,12 +139,16 @@ export default function CommentsSection({ isLoading, houseStatuses }) {
           idComment: comment.idComment,
         });
       }
-
+ 
+      
       updateHouse({
         house: {
           idHouse,
           status: status || houseSelected.status,
           comments: [{ ...comment, files: commentFolder }, ...comments],
+          dateNextCall: `${anio}-${mes}-${dia}`,
+          files: house_selected.files,
+          description: description,
         },
       });
       openAlert({
@@ -207,6 +231,10 @@ export default function CommentsSection({ isLoading, houseStatuses }) {
                   label={`Update House Status to ${newStatus.name}`}
                 />
               )}
+              <div style={{display: 'grid' , width: '100%', marginLeft: '2.5em' }}>
+              <p>Next Call:</p>
+              <p>{calendar_status.date}</p>
+              </div>
               <Button
                 color="primary"
                 variant="contained"

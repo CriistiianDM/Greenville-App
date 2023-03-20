@@ -14,7 +14,7 @@ async function uploadFileToHouse({ idHouse, ...props }) {
     idHouse,
     ...props,
   });
-  console.log('fileFromDrive', fileFromDrive);
+ 
   if (!fileFromDrive.folder) noFolderCreated();
   return fileFromDrive;
 }

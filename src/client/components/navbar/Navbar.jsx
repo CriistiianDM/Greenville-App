@@ -83,6 +83,7 @@ export function SearchBox({ classes }) {
     try {
       setLoading(true);
       let housesResponse = await API.getHouses();
+      console.log('housesResponse', housesResponse);
       const comments = await API.getComments();
       housesResponse = housesResponse.map(h => ({
         ...h,

@@ -88,7 +88,7 @@ function HouseContext({ children }) {
       const fileFromDrive = await API.uplaodFilesGroups({
         zone,
         houseFiles: files,
-        idHouse: `${idHr} / ${lastName} / ${address}`,
+        idHouse: `${idHr} / ${lastName} / ${address}`
       });
       houseFolder = fileFromDrive.folder;
     } else {

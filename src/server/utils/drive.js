@@ -11,11 +11,33 @@ function base64ToBlob(fileName, fileData) {
   return blob;
 }
 
-function findOrCreateFolder(name, folder2search) {
+
+
+function findOrCreateFolder(name, folder2search ) {
   let folder;
-  const folders = folder2search.getFoldersByName(name);
-  if (folders.hasNext()) folder = folders.next();
-  else folder = folder2search.createFolder(name);
+    console.log('folder2search', name)
+  
+    const folders = folder2search.getFoldersByName(name);
+    if (folders.hasNext()) folder = folders.next();
+    else folder = folder2search.createFolder(name);
+    // const allFolders = folder2search.getFolders();
+    // console.log(allFolders)
+    // while (allFolders.hasNext()) {
+    //     const potentialFolder = allFolders.next();
+    //     console.log(potentialFolder)
+    //     console.log('ummmmmmm')
+    //     console.log(potentialFolder.getUrl() === name)
+    //     console.log(potentialFolder.getUrl(), 'url' , name, 'name')
+    //     console.log('dddddddd33333')
+    //     if (potentialFolder.getUrl() === name) {
+    //       folder = potentialFolder;
+    //       break;
+    //     }
+    // }
+
+
+  //if (!folder) {folder2search.createFolder(name)};
+
   return folder;
 }
 
@@ -52,7 +74,7 @@ function getFileGroupFolder({ group, zone, idHouse }) {
   return fileGroupFolder;
 }
 
-export function getHouseFolder({ idHouse, zone }) {
+export function getHouseFolder({ idHouse, zone}) {
   const zoneFolder = getZoneFolder(zone);
   const houseFolder = findOrCreateFolder(idHouse, zoneFolder);
   return houseFolder;
@@ -139,8 +161,9 @@ export function uploadHouseCommentsFiles({ idComment, idHouse, files, zone }) {
   return response;
 }
 
-export function uploadHouseFiles({ idHouse, zone, group, files }) {
-  Logger.log(`=======UPLOADING HOUSE ${idHouse} FILES======`);
+export function uploadHouseFiles({ idHouse, zone, group, files}) {
+  Logger.log(`=======UPLOADING HOUSE ${idHouse} FILES ======`);
+  
   if (!files.length) return null;
   const options = {
     idHouse,
@@ -151,6 +174,7 @@ export function uploadHouseFiles({ idHouse, zone, group, files }) {
   };
   const savedFiles = mapHouseFiles(options);
   const currentFolder = getHouseFolder({ idHouse, zone });
+  //matenme porfavor 3hps horas buscando el error y fue que no borre las varaibles de prueba
   const response = { files: savedFiles, folder: currentFolder.getUrl() };
   Logger.log('FILES RESPONSE:');
   Logger.log(response);
