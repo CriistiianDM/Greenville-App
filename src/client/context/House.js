@@ -88,7 +88,7 @@ function HouseContext({ children }) {
       const fileFromDrive = await API.uplaodFilesGroups({
         zone,
         houseFiles: files,
-        idHouse: `${idHr} / ${lastName} / ${address}`
+        idHouse:`${idHr} / ${lastName} / ${address} |${house.files}`,
       });
       houseFolder = fileFromDrive.folder;
     } else {
@@ -105,7 +105,7 @@ function HouseContext({ children }) {
     console.log(`Response Data: `, data);
     if (!ok) return { error: data };
     const houseFolder = await getHouseFolder({ house: data, files });
-
+   
     const { idHouse } = data;
     const description = 'House Created';
     const status = 'INITIAL';

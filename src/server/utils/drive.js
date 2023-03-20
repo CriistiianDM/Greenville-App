@@ -16,27 +16,38 @@ function base64ToBlob(fileName, fileData) {
 function findOrCreateFolder(name, folder2search ) {
   let folder;
     console.log('folder2search', name)
+
+    const url_folder = (name.split('|')[1] === undefined)? name : name.split('|')[1];
+    console.log('url_folder', url_folder);
+    //exprecion regular para saber si es una url
+    const regex = new RegExp('https://drive.google.com/drive/folders/([a-zA-Z0-9-_]+)');
+    const match = url_folder.match(regex);
   
-    const folders = folder2search.getFoldersByName(name);
+    if (match) {
+
+      const allFolders = folder2search.getFolders();
+      
+      while (allFolders.hasNext()) {
+          const potentialFolder = allFolders.next();
+         
+          if (potentialFolder.getUrl() === url_folder) {
+            folder = potentialFolder;
+            break;
+          }
+      }
+
+    }
+
+
+    if (!folder && !match)  {
+    console.log('Entre A crear carpeta')
+    const folders = folder2search.getFoldersByName(name.split('|')[0]);
     if (folders.hasNext()) folder = folders.next();
-    else folder = folder2search.createFolder(name);
-    // const allFolders = folder2search.getFolders();
-    // console.log(allFolders)
-    // while (allFolders.hasNext()) {
-    //     const potentialFolder = allFolders.next();
-    //     console.log(potentialFolder)
-    //     console.log('ummmmmmm')
-    //     console.log(potentialFolder.getUrl() === name)
-    //     console.log(potentialFolder.getUrl(), 'url' , name, 'name')
-    //     console.log('dddddddd33333')
-    //     if (potentialFolder.getUrl() === name) {
-    //       folder = potentialFolder;
-    //       break;
-    //     }
-    // }
+    else { folder = folder2search.createFolder(name.split('|')[0]); }
+    }
 
 
-  //if (!folder) {folder2search.createFolder(name)};
+   //if (!folder && !match) {folder2search.createFolder(name.split('|')[0])};
 
   return folder;
 }

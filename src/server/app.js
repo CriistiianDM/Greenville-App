@@ -59,7 +59,7 @@ export function getHouseFiles(house) {
   Logger.log('newHouse');
   const folder = global.getHouseFolder({
     zone,
-    idHouse: `${idHr} / ${lastName} / ${address}`
+    idHouse: `${idHr} / ${lastName} / ${address} |${newHouse.files}`,
   });
   const subFolders = folder.getFolders();
   const houseFiles = {};
@@ -341,6 +341,7 @@ function updateEntity({
   try {
     const response = { ok: false, data: null };
     const form = JSON.parse(serializedData);
+    
     Logger.log(form);
     const { data, index } = findEntity(idGetter(form));
     if (!index) throw new Error(`${name} does not exists`);
