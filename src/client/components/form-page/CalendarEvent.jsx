@@ -53,6 +53,15 @@ export default function CalendarEvent(props) {
 
   }
 
+  const handle_open_click = () => {
+    set_on_calendar_event_click({
+        ...on_calendar_event_click,
+        checked: false,
+        date: 'aaaa-dd-mm'
+    });
+
+  }
+
   //console.log('CalendarEvent', data);
   console.log('CalendarEvent', on_calendar_event_click.checked);
   if (on_calendar_event_click.checked) {
@@ -74,6 +83,9 @@ export default function CalendarEvent(props) {
                             }}
                         />
                         <div className='_container_button_calendar_'>
+                            <Button onClick={handle_open_click} className={classes.button_styles}>
+                                Cancel
+                            </Button>
                             <Button onClick={handle_close_click} className={classes.button_styles}>
                                 OK 
                             </Button>

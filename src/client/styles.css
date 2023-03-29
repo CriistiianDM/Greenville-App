@@ -78,7 +78,7 @@
 
 ._container_button_calendar_ {
     display: grid;
-    grid-template-columns: 100%;
+    grid-template-columns: 50% 50%;
     gap: 0.5em;
     place-items: center;
 }
@@ -96,6 +96,12 @@
     font-family: "Roboto", "Helvetica", "Arial", sans-serif;
     font-weight: 400;
     color: rgba(0, 0, 0, 0.87);
+}
+
+._button_next_call_ {
+    z-index: 999;
+    cursor: pointer;
+    position: relative;
 }
 
 @media (max-width: 900px) {

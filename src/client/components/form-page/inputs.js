@@ -60,6 +60,7 @@ export const CustomTextField = ({
   handleChange,
   InputProps,
   handleBlur,
+  isRequired
 }) => (
   <TextField
     variant={variant}
@@ -69,7 +70,7 @@ export const CustomTextField = ({
     onBlur={handleBlur}
     helperText={touched[name] && errors[name]}
     error={!!(touched[name] && errors[name])}
-    required
+    required={isRequired}
     style={style}
     type={type}
     id={name}

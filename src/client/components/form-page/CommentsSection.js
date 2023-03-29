@@ -53,19 +53,28 @@ export default function CommentsSection({ isLoading, houseStatuses }) {
   const handleChangeStatus = (event) => {
       
       setChecked(event.target.checked);
-      if (event.target.checked) {
+      // if (event.target.checked) {
+      //   set_calendar_status({
+      //      ...calendar_status,
+      //       checked: true
+      //   });
+      // }
+      // else {
+      //   set_calendar_status({
+      //     ...calendar_status,
+      //      date: 'aaaa-mm-dd'
+      //  });
+      // }
+
+  }
+
+  const handleChangeDate = (event) => {
+
         set_calendar_status({
            ...calendar_status,
             checked: true
         });
-      }
-      else {
-        set_calendar_status({
-          ...calendar_status,
-           date: 'aaaa-mm-dd'
-       });
-      }
-
+      
   }
 
   React.useEffect(() => {
@@ -232,7 +241,7 @@ export default function CommentsSection({ isLoading, houseStatuses }) {
                 />
               )}
               <div style={{display: 'grid' , width: '100%', marginLeft: '2.5em' }}>
-              <p>Next Call:</p>
+              <p><a className='_button_next_call_' onClick={handleChangeDate}>Next Call:</a></p>
               <p>{calendar_status.date}</p>
               </div>
               <Button

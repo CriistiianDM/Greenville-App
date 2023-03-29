@@ -105,6 +105,7 @@ export default function HomeFields({
               name="idHr"
               label="ID HR"
               type="number"
+              isRequired={true}
               {...inputProps}
               InputProps={{
                 readOnly: showId,
@@ -115,7 +116,7 @@ export default function HomeFields({
         )}
       </Grid>
       <Grid item xs={12} md={4}>
-        <CustomTextField name="lastName" label="Last Name" {...inputProps} />
+        <CustomTextField name="lastName" isRequired={true} label="Last Name" {...inputProps} />
       </Grid>
       <Grid item xs={12} md={4}>
         <CustomSearchSelect
@@ -140,6 +141,7 @@ export default function HomeFields({
           type="number"
           name="drywallFootage"
           label="Drywall Footage"
+          isRequired={true}
           {...inputProps}
         />
       </Grid>
@@ -148,6 +150,7 @@ export default function HomeFields({
           type="number"
           name="footHouse"
           label="Foot House"
+          isRequired={true}
           {...inputProps}
         />
       </Grid>
@@ -156,6 +159,7 @@ export default function HomeFields({
           type="number"
           name="footGarage"
           label="Foot Garage"
+          isRequired={false}
           {...inputProps}
         />
       </Grid>
@@ -164,6 +168,25 @@ export default function HomeFields({
           type="number"
           name="footExterior"
           label="Foot Exterior"
+          isRequired={false}
+          {...inputProps}
+        />
+      </Grid>
+      <Grid item xs={6} md={3}>
+        <CustomTextField
+          type="number"
+          name="GadeCode"
+          label="Gade Code"
+          isRequired={false}
+          {...inputProps}
+        />
+      </Grid>
+      <Grid item xs={6} md={3}>
+        <CustomTextField
+          type="number"
+          name="DorrCode"
+          label="Dorr Code"
+          isRequired={false}
           {...inputProps}
         />
       </Grid>
