@@ -55,11 +55,11 @@ function getHousesSheet() {
 export function getHouseFiles(house) {
   if (!house.files) return house;
   const newHouse = { ...house };
-  const { idHouse, address, zone , idHr , lastName } = newHouse;
+  const { idHouse, address, zone , idHr , lastName , builder } = newHouse;
   Logger.log('newHouse');
   const folder = global.getHouseFolder({
     zone,
-    idHouse: `${idHr} / ${lastName} / ${address} |${newHouse.files}`,
+    idHouse: `${builder} / ${idHr} / ${lastName} / ${address} |${newHouse.files}`,
   });
   const subFolders = folder.getFolders();
   const houseFiles = {};

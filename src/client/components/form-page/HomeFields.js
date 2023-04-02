@@ -184,8 +184,44 @@ export default function HomeFields({
       <Grid item xs={6} md={3}>
         <CustomTextField
           type="number"
-          name="DorrCode"
-          label="Dorr Code"
+          name="DoorCode"
+          label="Door Code"
+          isRequired={false}
+          {...inputProps}
+        />
+      </Grid>
+      <Grid item xs={6} md={3}>
+        <CustomTextField
+          type="text"
+          name="Hanger"
+          label="Hanger"
+          isRequired={false}
+          {...inputProps}
+        />
+      </Grid>
+      <Grid item xs={6} md={3}>
+        <CustomTextField
+          type="text"
+          name="Finisher"
+          label="Finisher"
+          isRequired={false}
+          {...inputProps}
+        />
+      </Grid>
+      <Grid item xs={6} md={3}>
+        <CustomTextField
+          type="text"
+          name="Painter"
+          label="Painter"
+          isRequired={false}
+          {...inputProps}
+        />
+      </Grid>
+      <Grid item xs={6} md={3}>
+        <CustomTextField
+          type="text"
+          name="Cleaner"
+          label="Cleaner"
           isRequired={false}
           {...inputProps}
         />

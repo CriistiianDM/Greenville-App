@@ -240,8 +240,8 @@ export default function CommentsSection({ isLoading, houseStatuses }) {
                   label={`Update House Status to ${newStatus.name}`}
                 />
               )}
-              <div style={{display: 'grid' , width: '100%', marginLeft: '2.5em' }}>
-              <p><a className='_button_next_call_' onClick={handleChangeDate}>Next Call:</a></p>
+              <div id='next_call' style={{display: 'grid' , width: '100%', marginLeft: '2.5em' }}>
+              <p><a  className='_button_next_call_' onClick={handleChangeDate}>Next Call:</a></p>
               <p>{calendar_status.date}</p>
               </div>
               <Button

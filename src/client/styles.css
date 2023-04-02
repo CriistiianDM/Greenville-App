@@ -104,6 +104,12 @@
     position: relative;
 }
 
+/* #next_call { margin-left: 0 }
+#next_call > p { display: inline; margin: auto 0 10px auto; }
+.buttom.jss15 { margin: 20px auto auto 0; }
+._button_next_call {  text-decoration: underline; }
+.jss23.jss22{ height: 65% } */
+
 @media (max-width: 900px) {
    
     .container-card-box {

@@ -82,13 +82,14 @@ function HouseContext({ children }) {
 
   const getHouseFolder = useCallback(async ({ house, files = [] }) => {
     console.log('==== GETTING HOUSE FOLDER ====');
-    const { idHouse, zone, address , idHr, lastName } = house;
+    const { idHouse, zone, address , idHr, lastName , builder } = house;
+    console.log(`House57: `, house);
     let houseFolder = '';
     if (files.length) {
       const fileFromDrive = await API.uplaodFilesGroups({
         zone,
         houseFiles: files,
-        idHouse:`${idHr} / ${lastName} / ${address} |${house.files}`,
+        idHouse:`${builder} / ${idHr} / ${lastName} / ${address} |${house.files}`,
       });
       houseFolder = fileFromDrive.folder;
     } else {
