@@ -492,3 +492,25 @@ export function createCalendarEvent(event_params) {
 
   return event;
 };
+
+export function getDataOthers(name, id) {
+  
+  let data =  getEntityData('OTHERS');
+  Logger.log(data);
+  data = data.map((item) => {
+          
+    return {
+      name: item[name],
+      id: item[id]
+    }
+
+  });
+
+  // //elmiminar duplicados y vacios
+  data = data.filter((item, index, self) =>
+     item.name !== '' &&  item.id !== ''
+  );
+
+  Logger.log(data);
+  return getEntityData('OTHERS');
+}

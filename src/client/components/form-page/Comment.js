@@ -7,9 +7,28 @@ import useStyles from './styles';
 import { formatDate } from '../utils';
 
 function Comment({ comment }) {
+  
   if (!comment) return null;
   const date = formatDate(comment.date);
   const classes = useStyles();
+  const [files, setFiles] = React.useState({
+      url_file: ''
+  });
+
+  const url_file = async () => {
+    const response = await comment.files;
+
+    setFiles({
+      ...files,
+      url_file: response
+    });
+
+  };
+  
+  React.useEffect(() => {
+    url_file();
+  }, []);
+
   return (
     <Grid
       item
@@ -33,7 +52,7 @@ function Comment({ comment }) {
       </Grid>
       {comment.files ? (
         <Grid item md={6}>
-          <Link align="right" href={comment.files} target="_blank">
+          <Link align="right" href={files.url_file} target="_blank">
             Attachments
           </Link>
         </Grid>

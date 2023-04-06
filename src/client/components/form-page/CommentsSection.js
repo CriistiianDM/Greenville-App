@@ -139,12 +139,12 @@ export default function CommentsSection({ isLoading, houseStatuses }) {
       }
       
       house_selected.dateNextCall = `${anio}-${mes}-${dia}`
-
+     
       if (comment && files.length) {
         commentFolder = API.uploadFilesToComment({
           zone,
           files,
-          idHouse: `${idHouse} / ${address}`,
+          idHouse: `${houseSelected.builder} / ${idHr} / ${lastName} / ${address} |${houseSelected.files}`,
           idComment: comment.idComment,
         });
       }

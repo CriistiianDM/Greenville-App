@@ -15,7 +15,7 @@ function base64ToBlob(fileName, fileData) {
 
 function findOrCreateFolder(name, folder2search ) {
   let folder;
-    console.log('folder2search', name)
+    console.log('folder2search Nuevo', name)
 
     const url_folder = (name.split('|')[1] === undefined)? name : name.split('|')[1];
     console.log('url_folder', url_folder);
@@ -94,7 +94,7 @@ export function getHouseFolder({ idHouse, zone}) {
 export function getHouseCommentsFolder({ id, idComment, zone }) {
   const houseFolder = getHouseFolder({ idHouse: id, zone });
   const commentsFolder = getCommentsFolder(houseFolder);
-  const commentFolder = findOrCreateFolder(idComment, commentsFolder);
+  const commentFolder = findOrCreateFolder(`${idComment}|undifine`, commentsFolder);
   return commentFolder;
 }
 

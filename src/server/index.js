@@ -34,6 +34,7 @@ global.uploadHouseFiles = publicDriveFunctions.uploadHouseFiles;
 global.getHouseFolder = publicDriveFunctions.getHouseFolder;
 global.getHouseCommentsFolder = publicDriveFunctions.getHouseCommentsFolder;
 
+
 // SPREADSHEET FUNCTIONS
 global.getSheetFromSpreadSheet = publicSheetFunctions.getSheetFromSpreadSheet;
 global.getRawDataFromSheet = publicSheetFunctions.getRawDataFromSheet;
@@ -45,6 +46,9 @@ global.setActiveSheet = publicSheetFunctions.setActiveSheet;
 global.getHeadersFromSheet = publicSheetFunctions.getHeadersFromSheet;
 global.jsonToSheetValues = publicSheetFunctions.jsonToSheetValues;
 global.sheetValuesToObject = publicSheetFunctions.sheetValuesToObject;
+global.getDataOthers = publicMainFunction.getDataOthers;
 
 //calendar functions
 global.createCalendarEvent = publicMainFunction.createCalendarEvent;
+
+

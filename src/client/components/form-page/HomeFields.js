@@ -53,7 +53,6 @@ export default function HomeFields({
     handleChangeAutocomplete('model', value, API.createModels, 9, reason);
   };
   const handleChangeAutocompleteBuilder = (event, value, reason) => {
-    console.log('{e,reason}', { value, reason });
     handleChangeAutocomplete('builder', value, API.createBuilders, 12, reason);
   };
 
@@ -61,6 +60,8 @@ export default function HomeFields({
   if (inputZone) {
     selectedZone = dependencies.zones.find(z => z.name === inputZone);
   }
+
+  const data_hanger = async function() { return await API.getDataOthers('hanger','idhanger') };
 
   React.useEffect(() => {
     //guardar el session storage
@@ -199,6 +200,18 @@ export default function HomeFields({
           {...inputProps}
         />
       </Grid>
+            {/* <Grid item xs={6} md={3}>
+                <CustomSelect
+                  name="Hanger"
+                  label="Hanger"
+                  InputProps={{
+                    readOnly: showId,
+                  }}
+                  {...inputProps}
+                  style={{ marginTop: 25 }}
+                  options={data_hanger}
+                />
+              </Grid> */}
       <Grid item xs={6} md={3}>
         <CustomTextField
           type="text"
