@@ -17,7 +17,7 @@ function Comment({ comment }) {
 
   const url_file = async () => {
     const response = await comment.files;
-
+    console.log(response, 'response45',files);
     setFiles({
       ...files,
       url_file: response
@@ -27,6 +27,7 @@ function Comment({ comment }) {
   
   React.useEffect(() => {
     url_file();
+    console.log(comment.files , 'comment.files');
   }, []);
 
   return (

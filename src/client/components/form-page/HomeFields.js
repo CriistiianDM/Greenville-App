@@ -45,15 +45,27 @@ export default function HomeFields({
         message,
       });
     }
+    
     setFieldValue(table, fieldValue || '');
   };
 
   const handleChangeAutocompleteModel = (event, value, reason) => {
-    console.log('{e,reason}', { value, reason });
-    handleChangeAutocomplete('model', value, API.createModels, 9, reason);
+    handleChangeAutocomplete('model', value,API.createModels, 9, reason);
   };
   const handleChangeAutocompleteBuilder = (event, value, reason) => {
     handleChangeAutocomplete('builder', value, API.createBuilders, 12, reason);
+  };
+  const handleChangeAutocompleteHander = (event, value, reason) => {
+    setFieldValue('hanger', value || '');
+  };
+  const handleChangeAutocompleteFinisher = (event, value, reason) => {
+    setFieldValue('finisher', value || '');
+  };
+  const handleChangeAutocompletePaintier = (event, value, reason) => {
+    setFieldValue('painter', value || '');
+  };
+  const handleChangeAutocompleteClieaner = (event, value, reason) => {
+    setFieldValue('cleaner', value || '');
   };
 
   const inputZone = inputProps.values.zone;
@@ -61,12 +73,58 @@ export default function HomeFields({
     selectedZone = dependencies.zones.find(z => z.name === inputZone);
   }
 
-  const data_hanger = async function() { return await API.getDataOthers('hanger','idhanger') };
+  const [select_others, setSelectOthers] = React.useState({
+      hangers: [],
+      finisher: [],
+      paintier: [],
+      clieaner: [],
+  });
+
+  //hanger
+  const data_hanger = async () => { 
+
+       const response = await API.getDataOthers(); 
+
+       const data_others_hanger = get_select_ohters_info('hanger', 'idhanger', response);
+       const data_others_finisher = get_select_ohters_info('finisher', 'idfinisher', response);
+       const data_others_paintier = get_select_ohters_info('paintier', 'idpaintier', response);
+       const data_others_clieaner = get_select_ohters_info('clieaner', 'idclieaner', response);
+       
+       setSelectOthers( prevState => ({
+        ...prevState,
+        hangers: data_others_hanger,
+        finisher: data_others_finisher,
+        paintier: data_others_paintier,
+        clieaner: data_others_clieaner
+      }));
+
+  };
+
+  const get_select_ohters_info = (name, id , data) => {
+     /* retorna un array de objetos 
+       con los datos que se necesitan */
+     return (data.map( (item) => {
+          
+          return {
+             name: item[name],
+             id: item[id]
+          }
+
+      })).filter( (item) => {
+            return item.name !== '' && item.id !== ''
+      } )
+
+  }
+
+  React.useEffect(() => {
+    sessionStorage.setItem('zone', JSON.stringify(selectedZone));
+  },[selectedZone]);
 
   React.useEffect(() => {
     //guardar el session storage
     sessionStorage.setItem('zone', JSON.stringify(selectedZone));
-  });
+    data_hanger();
+  },[]);
 
   return (
     <>
@@ -192,49 +250,55 @@ export default function HomeFields({
         />
       </Grid>
       <Grid item xs={6} md={3}>
-        <CustomTextField
-          type="text"
-          name="Hanger"
+        <CustomSearchSelect
+          name="hanger"
           label="Hanger"
-          isRequired={false}
           {...inputProps}
-        />
-      </Grid>
-            {/* <Grid item xs={6} md={3}>
-                <CustomSelect
-                  name="Hanger"
-                  label="Hanger"
-                  InputProps={{
-                    readOnly: showId,
-                  }}
-                  {...inputProps}
-                  style={{ marginTop: 25 }}
-                  options={data_hanger}
-                />
-              </Grid> */}
-      <Grid item xs={6} md={3}>
-        <CustomTextField
-          type="text"
-          name="Finisher"
-          label="Finisher"
-          isRequired={false}
-          {...inputProps}
+          handleChange={handleChangeAutocompleteHander}
+          options={select_others.hangers}
         />
       </Grid>
       <Grid item xs={6} md={3}>
-        <CustomTextField
-          type="text"
-          name="Painter"
+        <CustomSearchSelect
+            name="finisher"
+            label="Finisher"
+            {...inputProps}
+            handleChange={handleChangeAutocompleteFinisher}
+            options={select_others.finisher}
+        />
+      </Grid>
+      <Grid item xs={6} md={3}>
+        <CustomSearchSelect
+          name="painter"
           label="Painter"
+          {...inputProps}
+          handleChange={handleChangeAutocompletePaintier}
+          options={select_others.paintier}
+        />
+      </Grid>
+      <Grid item xs={6} md={3}>
+        <CustomSearchSelect
+            name="cleaner"
+            label="Cleaner"
+            {...inputProps}
+            handleChange={handleChangeAutocompleteClieaner}
+            options={select_others.clieaner}
+        />
+      </Grid>
+      <Grid item xs={6} md={3}>
+        <CustomTextField
+          type="text"
+          name="swAddres"
+          label="SW ADDRES"
           isRequired={false}
           {...inputProps}
         />
       </Grid>
       <Grid item xs={6} md={3}>
         <CustomTextField
-          type="text"
-          name="Cleaner"
-          label="Cleaner"
+          type="number"
+          name="swTel"
+          label="SW TEL"
           isRequired={false}
           {...inputProps}
         />

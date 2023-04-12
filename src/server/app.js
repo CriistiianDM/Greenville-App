@@ -59,7 +59,7 @@ export function getHouseFiles(house) {
   Logger.log('newHouse');
   const folder = global.getHouseFolder({
     zone,
-    idHouse: `${builder} / ${idHr} / ${lastName} / ${address} |${newHouse.files}`,
+    idHouse: `${idHr} / ${lastName} / ${address} |${newHouse.files}`,
   });
   const subFolders = folder.getFolders();
   const houseFiles = {};
@@ -493,24 +493,6 @@ export function createCalendarEvent(event_params) {
   return event;
 };
 
-export function getDataOthers(name, id) {
-  
-  let data =  getEntityData('OTHERS');
-  Logger.log(data);
-  data = data.map((item) => {
-          
-    return {
-      name: item[name],
-      id: item[id]
-    }
-
-  });
-
-  // //elmiminar duplicados y vacios
-  data = data.filter((item, index, self) =>
-     item.name !== '' &&  item.id !== ''
-  );
-
-  Logger.log(data);
+export function getDataOthers() {
   return getEntityData('OTHERS');
 }

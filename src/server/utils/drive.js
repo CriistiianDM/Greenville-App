@@ -38,16 +38,13 @@ function findOrCreateFolder(name, folder2search ) {
 
     }
 
-
     if (!folder && !match)  {
-    console.log('Entre A crear carpeta')
-    const folders = folder2search.getFoldersByName(name.split('|')[0]);
-    if (folders.hasNext()) folder = folders.next();
-    else { folder = folder2search.createFolder(name.split('|')[0]); }
+      console.log('Entre A crear carpeta');
+      const folderName = name.includes('|') ? name.split('|')[0] : name;
+      const folders = folder2search.getFoldersByName(folderName);
+      if (folders.hasNext()) folder = folders.next();
+      else { folder = folder2search.createFolder(folderName); }
     }
-
-
-   //if (!folder && !match) {folder2search.createFolder(name.split('|')[0])};
 
   return folder;
 }
@@ -94,7 +91,8 @@ export function getHouseFolder({ idHouse, zone}) {
 export function getHouseCommentsFolder({ id, idComment, zone }) {
   const houseFolder = getHouseFolder({ idHouse: id, zone });
   const commentsFolder = getCommentsFolder(houseFolder);
-  const commentFolder = findOrCreateFolder(`${idComment}|undifine`, commentsFolder);
+  const _bug_ = 'bug'
+  const commentFolder = findOrCreateFolder(`${idComment}`, commentsFolder);
   return commentFolder;
 }
 

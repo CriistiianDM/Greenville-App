@@ -51,21 +51,7 @@ export default function CommentsSection({ isLoading, houseStatuses }) {
   };
 
   const handleChangeStatus = (event) => {
-      
       setChecked(event.target.checked);
-      // if (event.target.checked) {
-      //   set_calendar_status({
-      //      ...calendar_status,
-      //       checked: true
-      //   });
-      // }
-      // else {
-      //   set_calendar_status({
-      //     ...calendar_status,
-      //      date: 'aaaa-mm-dd'
-      //  });
-      // }
-
   }
 
   const handleChangeDate = (event) => {
@@ -78,7 +64,8 @@ export default function CommentsSection({ isLoading, houseStatuses }) {
   }
 
   React.useEffect(() => {
-    sessionStorage.setItem('calendar_status', JSON.stringify(calendar_status));
+    sessionStorage.setItem('calendar_status', JSON.stringify(calendar_status === 'NaN-NaN-NaN' ? 'aaaa-mm-dd' : calendar_status));
+
   }, [calendar_status]);
 
   const handleSaveComment = async event => {
@@ -106,15 +93,24 @@ export default function CommentsSection({ isLoading, houseStatuses }) {
       date_time_start_event.setDate(date_time_start_event.getDate() + 1);
 
       let house_selected = JSON.parse(sessionStorage.getItem('house_selected'));
-      const anio = date_time_start_event.getFullYear();
-      const mes = date_time_start_event.getMonth() + 1;
-      const dia = date_time_start_event.getDate();
+      let anio = date_time_start_event.getFullYear() 
+      let mes = date_time_start_event.getMonth() + 1;
+      let dia = date_time_start_event.getDate();
       
+      if (isNaN(anio)) {
+        anio = 'aaaa';
+      }
+
+      if (isNaN(mes)) {
+        mes = 'mm';
+      }
+
+      if (isNaN(dia)) {
+        dia = 'dd';
+      }
 
       let status = '';
       if (checked) status = newStatus.name;
-
-      //setDescription(`${description} Next call: ${anio}-${mes}-${dia}`)
       
       const { data: comment } = await API.createComment(
         JSON.stringify({ idHouse, description: `${description} Next call: ${anio}-${mes}-${dia}`, status })
@@ -128,7 +124,7 @@ export default function CommentsSection({ isLoading, houseStatuses }) {
       if (calendar_status.date != 'aaaa-mm-dd') {
           await API.createCalendarEvent(
             JSON.stringify({
-              title: `${idHr} - ${lastName} - ${houseSelected.status}`,
+              title: `${houseSelected.builder} - ${idHr} - ${lastName} - ${houseSelected.status}`,
               description: `House ${idHouse} - ${address}`,
               start_: `${anio}-${mes}-${dia}`,
               idCalendar: zone_calendar.idCalendar,
@@ -144,7 +140,7 @@ export default function CommentsSection({ isLoading, houseStatuses }) {
         commentFolder = API.uploadFilesToComment({
           zone,
           files,
-          idHouse: `${houseSelected.builder} / ${idHr} / ${lastName} / ${address} |${houseSelected.files}`,
+          idHouse: `${idHr} / ${lastName} / ${address} |${houseSelected.files}`,
           idComment: comment.idComment,
         });
       }
