@@ -134,7 +134,7 @@ export default function CommentsSection({ isLoading, houseStatuses }) {
           );
       }
       
-      house_selected.dateNextCall = `${anio}-${mes}-${dia}`
+      house_selected.dateNextCall = (`${anio}-${mes}-${dia}` !== 'aaaa-mm-dd')? (`${anio}-${mes}-${dia}`) : house_selected.dateNextCall;
      
       if (comment && files.length) {
         commentFolder = API.uploadFilesToComment({
@@ -151,11 +151,12 @@ export default function CommentsSection({ isLoading, houseStatuses }) {
           idHouse,
           status: status || houseSelected.status,
           comments: [{ ...comment, files: commentFolder }, ...comments],
-          dateNextCall: `${anio}-${mes}-${dia}`,
+          dateNextCall: (`${anio}-${mes}-${dia}` !== 'aaaa-mm-dd')? (`${anio}-${mes}-${dia}`) : house_selected.dateNextCall,
           files: house_selected.files,
           description: description,
         },
       });
+      
       openAlert({
         variant: 'success',
         message: 'Comment created successfully',

@@ -101,6 +101,7 @@ export function SearchBox({ classes }) {
     console.log('{e,reason}', { value, reason });
     if (reason === 'select-option') {
       const id = value.idHouse;
+      sessionStorage.setItem('house_selected', JSON.stringify(value) );
       history.push(`/update/${id}`);
       setHouseSelected(value);
     }

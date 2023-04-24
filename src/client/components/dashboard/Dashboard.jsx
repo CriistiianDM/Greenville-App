@@ -27,7 +27,6 @@ export default function Dashboard() {
   async function init() {
     try {
       const mStatuses = await API.getHouseStatuses();
-      console.log('ummm',{ mStatuses });
       setStatuses([{ name: 'INITIAL' }, ...mStatuses]);
     } catch (error) {
       console.error('Dashboard Error:', error);
@@ -127,9 +126,8 @@ function HouseList({ data }) {
     const data_house = data.filter((house) => house.idHouse === Number(id_house));
     history.push(`/update/${id_house}`);
     setHouseSelected(data_house[0]);
-       
   };  
-  console.log('data12yyy',data);
+ 
 
   //order by dateNextCall
   console.log(data.sort((a, b) => {
