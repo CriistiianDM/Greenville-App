@@ -1,4 +1,4 @@
-import React, { useCallback, useState, useEffect } from 'react';
+import React, { useCallback, useState, useEffect , useRef } from 'react';
 import Dropzone from 'react-dropzone';
 import { fade, makeStyles } from '@material-ui/core';
 import clsx from 'clsx';
@@ -27,20 +27,49 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
+
+window.onload = function() {
+  sessionStorage.removeItem('MT15');
+  console.log('onload', window.innerWidth)
+   //capturar el ancho de la pantalla y si es menor a 600px mostrar el boton de tomar foto
+    if (window.innerWidth <= 900) {
+      //document.getElementById('take_photo__')
+      //obtener todos los elementos por id y quitar una clase
+       document.querySelectorAll('#take_photo__').forEach((element) => {
+        console.log(element)
+        element.classList.remove('_take_photo_action_');
+      });
+    }
+}
+
+window.onresize = function() {
+  console.log('onload', window.innerWidth)
+   //capturar el ancho de la pantalla y si es menor a 600px mostrar el boton de tomar foto
+   if (window.innerWidth <= 900) {
+    document.querySelectorAll('#take_photo__').forEach((element) => {
+      console.log(element)
+      element.classList.remove('_take_photo_action_');
+    });
+  }
+  
+}
+
 export default function CustomDropzone({
   error,
   field,
   reset,
   helperText,
   setFieldValue,
+  data_ref_files,
   ...dropZoneProps
 }) {
   const [loading, setLoading] = useState(false);
-  const [files, setFiles] = useState([]);
+  const [files, setFiles] = useState([])
   const { disabled } = dropZoneProps;
   const classes = useStyles();
 
   const dropzoneRef = React.useRef(null);
+  const input_ref = useRef(null);
 
   const addFiles = (droppedFiles = []) =>
     setFiles(prevFiles => [...prevFiles, ...droppedFiles]);
@@ -64,9 +93,14 @@ export default function CustomDropzone({
     }
   }, [reset]);
 
-  window.onload = function() {
-    sessionStorage.removeItem('MT15');
-  }
+  useEffect(() => {
+     //console.log('useEffect', input_ref.current, dropzoneRef.current,  dropZoneProps)
+  }, [input_ref]);
+
+  // useEffect(() => {
+  //    console.log('useEffect1111', files_reset)
+  // }, [files_reset]);
+
 
   var video_ = document.getElementById(`video_${field}`);
   var stream_ = null;
@@ -104,11 +138,15 @@ export default function CustomDropzone({
         stream_ = null;
     }
   }
-
+  //data_ref_files = [];
   return (
     <>
       <Dropzone ref={dropzoneRef} onDrop={onDrop} {...dropZoneProps}>
-        {({ getRootProps, getInputProps, isDragActive }) => (
+        {({ getRootProps, getInputProps, isDragActive }) => {
+          console.log('getRootProps', getInputProps())
+          
+          //data_ref_files.push(getInputProps().ref.current);
+          return (
           <>
           <div
             className={clsx(classes.container, {
@@ -130,10 +168,10 @@ export default function CustomDropzone({
                 PhotoComponent(setFiles, handle_close, field) 
            }
           <div>
-              <a className='_take_photo_action_' onClick={handle_click} >Tomar foto</a>
+              <a className='_take_photo_action_' onClick={handle_click} id="take_photo__">Tomar foto</a>
           </div>
-          </>
-        )}
+          </>)
+        }}
       </Dropzone>
     </>
     
@@ -185,9 +223,8 @@ async function logic_take_photop(setFiles,field) {
     setFiles(prevFiles => [...prevFiles, file]);
     const response = await Promise.all(array_file.map(getFile));
     setFieldValue(field, response);
-
-    document.getElementById(`box_${field}`)
-    .classList.add('_display_none_');    
+    console.log(`box_${field}`, 'Response')
+    document.getElementById(`box_${field}`).classList.add('_display_none_');    
      
 }
 

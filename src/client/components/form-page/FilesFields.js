@@ -22,13 +22,16 @@ export default function FilesFields({
   isLoading,
   filesGroups,
   houseSelected = {},
-  setFieldValue
+  setFieldValue,
+  setFilesReset,
+  files_reset,
+  data_ref_files
 }) {
   const classes = useStyles();
   if (!filesGroups || !filesGroups.length) return null;
   const { files: houseFiles, filesGroups: houseFilesGroups } = houseSelected;
   const haveFilesGroups = !!Object.keys(houseFilesGroups || {}).length;
-  console.log(`FilesGroups`, filesGroups);
+  
   return (
     <Box width="100%" mt={8}>
       <Accordion>
@@ -65,6 +68,7 @@ export default function FilesFields({
                   field={f.name}
                   disabled={isLoading}
                   setFieldValue={setFieldValue}
+                  data_ref_files={data_ref_files}
                   // accept={SUPPORTED_FORMATS}
                 />
               </Grid>
