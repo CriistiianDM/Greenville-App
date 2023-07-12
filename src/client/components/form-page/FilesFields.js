@@ -57,7 +57,7 @@ export default function FilesFields({
             alignItems="center"
           >
             {(filesGroups).map(f => (
-              <Grid item xs={6} key={f.name}>
+              <Grid item id={`files-container_${f.id}`}  xs={6} key={f.name}>
                 <Typography variant="h6">{f.name}</Typography>
                 {haveFilesGroups &&
                   !!(houseFilesGroups[f.name] || []).length && (

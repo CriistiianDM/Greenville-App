@@ -97,9 +97,6 @@ export default function CustomDropzone({
      //console.log('useEffect', input_ref.current, dropzoneRef.current,  dropZoneProps)
   }, [input_ref]);
 
-  // useEffect(() => {
-  //    console.log('useEffect1111', files_reset)
-  // }, [files_reset]);
 
 
   var video_ = document.getElementById(`video_${field}`);
@@ -143,9 +140,7 @@ export default function CustomDropzone({
     <>
       <Dropzone ref={dropzoneRef} onDrop={onDrop} {...dropZoneProps}>
         {({ getRootProps, getInputProps, isDragActive }) => {
-          console.log('getRootProps', getInputProps())
           
-          //data_ref_files.push(getInputProps().ref.current);
           return (
           <>
           <div
