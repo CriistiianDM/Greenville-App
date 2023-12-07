@@ -1,5 +1,6 @@
-const GENERAL_DB =
-  'https://docs.google.com/spreadsheets/d/1G9yjbaEq79SQDsTkHa1NsvtwFsI-RPvBVfUses5_oiA/edit#gid=0';
+import { Looks } from "@material-ui/icons";
+
+const GENERAL_DB = 'https://docs.google.com/spreadsheets/d/1G9yjbaEq79SQDsTkHa1NsvtwFsI-RPvBVfUses5_oiA/edit#gid=0';
 
 const getSheets = () => SpreadsheetApp.getActive().getSheets();
 
@@ -20,9 +21,13 @@ function camelCase(string) {
 }
 
 export function getSheetFromSpreadSheet(sheet, url = GENERAL_DB) {
-  const Spreadsheet = SpreadsheetApp.openByUrl(url || GENERAL_DB);
-  if (sheet) return Spreadsheet.getSheetByName(sheet);
-  return null;
+  try {
+    const spreadsheet = SpreadsheetApp.openByUrl(url);
+    if (sheet) return spreadsheet.getSheetByName(sheet);
+    return null;
+  } catch (error) {
+    return null;
+  }
 }
 
 export function getRawDataFromSheet(sheet, url = GENERAL_DB) {

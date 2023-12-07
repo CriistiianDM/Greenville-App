@@ -5,12 +5,11 @@ export function isAdmin() {
   const admins = [
     'suarez.andres@correounivalle.edu.co',
     'samuel.ramirez@correounivalle.edu.co',
-    'hrdrywall.system@gmail.com'
+    'hrdrywall.system@gmail.com',
+    'cristian.machado@correounivalle.edu.co'
   ];
-  Logger.log('guessEmail');
-  Logger.log(guessEmail);
+ 
   const isGuessAdmin = admins.indexOf(String(guessEmail)) >= 0;
-  Logger.log(isGuessAdmin);
 
   return isGuessAdmin;
 }
@@ -47,7 +46,6 @@ function getEntityData(entity) {
 function getHousesSheet() {
   Logger.log('=============Getting Houses Sheet===========');
   const sheet = global.getSheetFromSpreadSheet('HOUSES');
-  Logger.log('sheet', sheet);
   const headers = global.getHeadersFromSheet(sheet);
   return { sheet, headers };
 }
