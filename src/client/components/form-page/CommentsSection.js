@@ -138,7 +138,6 @@ export default function CommentsSection({ isLoading, houseStatuses }) {
       house_selected.dateNextCall = (`${anio}-${mes}-${dia}` !== 'aaaa-mm-dd')? (`${anio}-${mes}-${dia}`) : house_selected.dateNextCall;
      
       if (comment && files.length) {
-        alert('entro al file');
         commentFolder = await API.uploadFilesToComment({
           zone,
           files,
