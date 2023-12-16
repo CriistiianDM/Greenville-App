@@ -74,7 +74,7 @@ export default function CommentsSection({ isLoading, houseStatuses }) {
       setUploading(true);
       const { idHouse, zone, comments = [], address , lastName , idHr  } = houseSelected;
       
-      setDescription(description + ` Next call: ${calendar_status.date}`);
+      setDescription(description);
 
       //date
       const date_event = new Date(calendar_status.date);
@@ -109,8 +109,10 @@ export default function CommentsSection({ isLoading, houseStatuses }) {
       let status = '';
       if (checked) status = newStatus.name;
       
+      const validateCalendar = calendar_status.date != 'aaaa-mm-dd';
+      const commentDescription = validateCalendar? `${description} Next call: ${anio}-${mes}-${dia}` : description
       const { data: comment } = await API.createComment(
-        JSON.stringify({ idHouse, description: `${description} Next call: ${anio}-${mes}-${dia}`, status })
+        JSON.stringify({ idHouse, description: commentDescription, status })
       );
       
       let commentFolder = '';
@@ -118,7 +120,7 @@ export default function CommentsSection({ isLoading, houseStatuses }) {
       //sacar del session storage la zone
       const zone_calendar = JSON.parse(sessionStorage.getItem('zone'));
     
-      if (calendar_status.date != 'aaaa-mm-dd') {
+      if (validateCalendar) {
         
           await API.createCalendarEvent(
             JSON.stringify({
@@ -144,7 +146,6 @@ export default function CommentsSection({ isLoading, houseStatuses }) {
           idComment: comment.idComment,
         });
       }
-      console.log(commentFolder , 'This is Folder Comments response what i need see');
       
       await updateHouse({
         house: {
