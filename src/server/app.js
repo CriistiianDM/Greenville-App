@@ -340,7 +340,7 @@ function updateEntity({
     const response = { ok: false, data: null };
     const form = JSON.parse(serializedData);
     
-    Logger.log(form);
+    Logger.log(`${JSON.stringify(form)} UMMMM ESTA ES LA COMBINASCION`);
     const { data, index } = findEntity(idGetter(form));
     if (!index) throw new Error(`${name} does not exists`);
     const { sheet, headers } = getEntitySheet();

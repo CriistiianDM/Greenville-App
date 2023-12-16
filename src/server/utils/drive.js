@@ -183,7 +183,7 @@ export function uploadHouseFiles({ idHouse, zone, group, files}) {
   };
   const savedFiles = mapHouseFiles(options);
   const currentFolder = getHouseFolder({ idHouse, zone });
-  //matenme porfavor 3hps horas buscando el error y fue que no borre las varaibles de prueba
+
   const response = { files: savedFiles, folder: currentFolder.getUrl() };
   Logger.log('FILES RESPONSE:');
   Logger.log(response);

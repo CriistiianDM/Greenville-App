@@ -57,7 +57,7 @@ export default function CalendarEvent(props) {
     set_on_calendar_event_click({
         ...on_calendar_event_click,
         checked: false,
-        date: 'aaaa-dd-mm'
+        date: 'aaaa-mm-dd'
     });
 
   }

@@ -69,9 +69,6 @@ export default function CommentsSection({ isLoading, houseStatuses }) {
   }, [calendar_status]);
 
   const handleSaveComment = async event => {
-    console.log(`houseSelected`, houseSelected);
-    console.log(`files`, files);
-
     try {
       event.stopPropagation();
       setUploading(true);
@@ -120,8 +117,9 @@ export default function CommentsSection({ isLoading, houseStatuses }) {
    
       //sacar del session storage la zone
       const zone_calendar = JSON.parse(sessionStorage.getItem('zone'));
-   
+    
       if (calendar_status.date != 'aaaa-mm-dd') {
+        
           await API.createCalendarEvent(
             JSON.stringify({
               title: `${houseSelected.builder} - ${idHr} - ${lastName} - ${houseSelected.status}`,
@@ -132,21 +130,23 @@ export default function CommentsSection({ isLoading, houseStatuses }) {
               location: address
             })
           );
+
       }
       
       house_selected.dateNextCall = (`${anio}-${mes}-${dia}` !== 'aaaa-mm-dd')? (`${anio}-${mes}-${dia}`) : house_selected.dateNextCall;
      
       if (comment && files.length) {
-        commentFolder = API.uploadFilesToComment({
+        alert('entro al file');
+        commentFolder = await API.uploadFilesToComment({
           zone,
           files,
           idHouse: `${idHr} / ${lastName} / ${address} |${houseSelected.files}`,
           idComment: comment.idComment,
         });
       }
- 
+      console.log(commentFolder , 'This is Folder Comments response what i need see');
       
-      updateHouse({
+      await updateHouse({
         house: {
           idHouse,
           status: status || houseSelected.status,

@@ -57,8 +57,6 @@ export default function Dashboard() {
       };
     }, {});
 
-  
-  console.log('455555',{ statuses, report });
   const selectedReport = (report[selected] || {}).data || [];
   return (
     <Grid container justify={'center'} spacing={2}>
