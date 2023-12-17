@@ -179,7 +179,7 @@ export function uploadHouseFiles({ idHouse, zone, group, files}) {
     files,
     zone,
     group,
-    // createFile: createHouseFile,
+    createFile: createHouseFile,
   };
   const savedFiles = mapHouseFiles(options);
   const currentFolder = getHouseFolder({ idHouse, zone });
