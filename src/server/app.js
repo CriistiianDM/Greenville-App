@@ -340,19 +340,30 @@ function updateEntity({
     const response = { ok: false, data: null };
     const form = JSON.parse(serializedData);
     
-    Logger.log(`${JSON.stringify(form)} UMMMM ESTA ES LA COMBINASCION`);
+    Logger.log(`${JSON.stringify(form)}`);
     const { data, index } = findEntity(idGetter(form));
     if (!index) throw new Error(`${name} does not exists`);
     const { sheet, headers } = getEntitySheet();
-    const entityRange = sheet.getRange(+index, 1, 1, sheet.getLastColumn());
-    const entityData = global.jsonToSheetValues({ ...data, ...form }, headers);
-    Logger.log(`${name} Data`);
-    Logger.log(entityData);
-    
-    entityRange.setValues([entityData]);
+    let indexSearch = index;
 
-    response.ok = true;
+    if (index < 0) {
+      const dataSheet = sheet.getRange('A:A').getValues();
+      indexSearch = dataSheet?.map((e,index) => {
+            if (parseInt(e[0]) == parseInt(form.idHouse)) {
+              return index + 1;
+            }
+            return -1;
+      }).filter((e) => {return e !== -1})[0]
+      Logger.log(indexSearch)
+    }
+
+    const entityRange = sheet.getRange(+indexSearch, 1, 1, sheet.getLastColumn());
+    const entityData = global.jsonToSheetValues({ ...data, ...form }, headers);
+    entityRange.setValues([entityData]);
+    Logger.log(`${name} Data`);
+
     response.data = entityData;
+    response.ok = true;
     return response;
   } catch (error) {
     Logger.log(error);
