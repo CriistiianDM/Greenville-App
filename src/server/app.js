@@ -314,8 +314,8 @@ function searchEntity({ name, getEntitySheet, entityId, idGetter }) {
 export function searchComment(idComment) {
   return searchEntity({
     name: 'Comment',
-    entityId: idComment,
     getEntitySheet: getCommentsSheet,
+    entityId: idComment,
     idGetter: entity => entity.idComment,
   });
 }
@@ -323,8 +323,8 @@ export function searchComment(idComment) {
 export function searchHouse(idHouse) {
   return searchEntity({
     name: 'House',
-    entityId: idHouse,
     getEntitySheet: getHousesSheet,
+    entityId: idHouse,
     idGetter: entity => entity.idHouse,
   });
 }
@@ -373,21 +373,22 @@ function updateEntity({
 
 export function updateHouse(serializedData) {
   return updateEntity({
-    serializedData,
     name: 'House',
-    findEntity: searchHouse,
-    getEntitySheet: getHousesSheet,
     idGetter: entity => entity.idHouse,
+    findEntity: searchHouse,
+    serializedData,
+    getEntitySheet: getHousesSheet,
   });
 }
 
 export function updateComment(serializedData) {
   return updateEntity({
-    serializedData,
     name: 'House',
-    findEntity: searchComment,
-    getEntitySheet: getCommentsSheet,
     idGetter: entity => entity.idComment,
+    findEntity: searchComment,
+    serializedData,
+    getEntitySheet: getCommentsSheet,
+    
   });
 }
 
