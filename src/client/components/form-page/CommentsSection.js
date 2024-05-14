@@ -145,7 +145,6 @@ export default function CommentsSection({ isLoading, houseStatuses }) {
           idComment: comment.idComment,
         });
       }
-      
       await updateHouse({
         house: {
           idHouse,
