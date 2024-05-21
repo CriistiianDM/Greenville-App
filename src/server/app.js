@@ -294,7 +294,7 @@ function searchEntity({ name, getEntitySheet, entityId, idGetter }) {
         }
         return -1;
   }).filter((e) => {return e !== -1})[0]
-  [ []]
+  
   //TODO: Search Logic before
   // const { index: entityIndex } = global.findText({ sheet, text: entityId });
   

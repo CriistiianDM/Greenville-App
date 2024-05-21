@@ -55,12 +55,10 @@ export default function CommentsSection({ isLoading, houseStatuses }) {
   }
 
   const handleChangeDate = (event) => {
-
         set_calendar_status({
            ...calendar_status,
             checked: true
         });
-      
   }
 
   React.useEffect(() => {
