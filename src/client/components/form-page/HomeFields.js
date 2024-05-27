@@ -243,7 +243,7 @@ export default function HomeFields({
       <Grid item xs={6} md={3}>
         <CustomTextField
           type="number"
-          name="DoorCode"
+          name="doorCode"
           label="Door Code"
           isRequired={false}
           {...inputProps}

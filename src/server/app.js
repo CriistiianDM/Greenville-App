@@ -286,8 +286,18 @@ function searchEntity({ name, getEntitySheet, entityId, idGetter }) {
     index: -1,
     data: null,
   };
-  const { index: entityIndex } = global.findText({ sheet, text: entityId });
-  Logger.log(`${name} Index ${entityIndex}`);
+
+  const dataSheet = sheet.getRange('A:A').getValues();
+  let entityIndex = dataSheet?.map((e,index) => {
+        if (parseInt(e[0]) == parseInt(entityId)) {
+          return index + 1;
+        }
+        return -1;
+  }).filter((e) => {return e !== -1})[0]
+  
+  //TODO: Search Logic before
+  // const { index: entityIndex } = global.findText({ sheet, text: entityId });
+  
   if (entityIndex <= -1) return result;
 
   const entityRange = sheet.getSheetValues(
@@ -299,8 +309,7 @@ function searchEntity({ name, getEntitySheet, entityId, idGetter }) {
   Logger.log(`${name} Range: ${entityRange.length}`);
   Logger.log(entityRange);
   const [entityData] = global.sheetValuesToObject(entityRange, headers);
-  Logger.log(`${name} Data:`);
-  Logger.log(entityData);
+  
   const isSameDocument = String(idGetter(entityData)) === String(entityId);
   if (!isSameDocument) return result;
 
@@ -340,7 +349,6 @@ function updateEntity({
     const response = { ok: false, data: null };
     const form = JSON.parse(serializedData);
     
-    Logger.log(`${JSON.stringify(form)}`);
     const { data, index } = findEntity(idGetter(form));
     if (!index) throw new Error(`${name} does not exists`);
     const { sheet, headers } = getEntitySheet();
@@ -354,13 +362,11 @@ function updateEntity({
             }
             return -1;
       }).filter((e) => {return e !== -1})[0]
-      Logger.log(indexSearch)
     }
 
     const entityRange = sheet.getRange(+indexSearch, 1, 1, sheet.getLastColumn());
     const entityData = global.jsonToSheetValues({ ...data, ...form }, headers);
     entityRange.setValues([entityData]);
-    Logger.log(`${name} Data`);
 
     response.data = entityData;
     response.ok = true;
@@ -376,7 +382,7 @@ export function updateHouse(serializedData) {
     name: 'House',
     idGetter: entity => entity.idHouse,
     findEntity: searchHouse,
-    serializedData,
+    serializedData: serializedData,
     getEntitySheet: getHousesSheet,
   });
 }
