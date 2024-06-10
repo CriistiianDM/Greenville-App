@@ -21,12 +21,11 @@ function Comment({ comment }) {
       ...files,
       url_file: response
     });
-
   };
   
   React.useEffect(() => {
     url_file();
-  }, []);
+  }, [comment.files]);
 
   return (
     <Grid
