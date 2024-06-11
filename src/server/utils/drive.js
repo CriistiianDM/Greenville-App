@@ -159,13 +159,12 @@ export function uploadHouseCommentsFiles({ idComment, idHouse, files, zone }) {
   });
   const currentFolder = getHouseCommentsFolder({
     id: idHouse,
-    idComment,
+    idComment,  
     zone,
   });
   const response = { files: savedFiles, folder: currentFolder.getUrl() };
   Logger.log('FILES RESPONSE:');
   Logger.log(response);
-
   Logger.log(`=======END UPLOADING HOUSE${idHouse} COMMENTS FILES========`);
   return response;
 }
@@ -187,7 +186,9 @@ export function uploadHouseFiles({ idHouse, zone, group, files}) {
   const response = { files: savedFiles, folder: currentFolder.getUrl() };
   Logger.log('FILES RESPONSE:');
   Logger.log(response);
-
+  
+  
+ 
   Logger.log(`=======END UPLOADING HOUSE${idHouse} FILES========`);
   return response;
 }

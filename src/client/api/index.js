@@ -27,13 +27,14 @@ async function uploadFilesToComment({ idComment, files, idHouse, zone }) {
     zone,
     idHouse,
   });
- 
+
   if (!fileFromDrive.folder) noFolderCreated();
   commentFolder = fileFromDrive.folder;
  
   await serverFunctions.updateComment(
     JSON.stringify({ files: commentFolder, idComment })
   );
+
   return commentFolder;
 }
 
