@@ -233,7 +233,7 @@ export default function HomeFields({
       </Grid>
       <Grid item xs={6} md={3}>
         <CustomTextField
-          type="number"
+          type="text"
           name="GadeCode"
           label="Gade Code"
           isRequired={false}
@@ -242,7 +242,7 @@ export default function HomeFields({
       </Grid>
       <Grid item xs={6} md={3}>
         <CustomTextField
-          type="number"
+          type="text"
           name="doorCode"
           label="Door Code"
           isRequired={false}
