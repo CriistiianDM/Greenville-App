@@ -45,7 +45,7 @@ export default function HomeFields({
         message,
       });
     }
-    console.log(' llegue al final y sigue setField')
+
     setFieldValue(table, fieldValue || '');
   };
 
