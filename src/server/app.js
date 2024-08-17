@@ -455,6 +455,73 @@ export function createBuilders(formString) {
   }
 }
 
+export function createHanger(formString) {
+  const form = JSON.parse(formString);
+  if (!form || !Object.keys(form).length) throw new Error('No data sent');
+  try {
+    Logger.log('Data for registering');
+    Logger.log(form);
+    const response = registerEntity('HANGER', form);
+    Logger.log('Response');
+    Logger.log(response);
+    return response;
+  } catch (error) {
+    Logger.log('Error Registering builder');
+    Logger.log(error);
+    return error.toString();
+  }
+}
+export function createFinisher(formString) {
+  const form = JSON.parse(formString);
+  if (!form || !Object.keys(form).length) throw new Error('No data sent');
+  try {
+    Logger.log('Data for registering');
+    Logger.log(form);
+    const response = registerEntity('FINISHER', form);
+    Logger.log('Response');
+    Logger.log(response);
+    return response;
+  } catch (error) {
+    Logger.log('Error Registering builder');
+    Logger.log(error);
+    return error.toString();
+  }
+}
+export function createPainter(formString) {
+  const form = JSON.parse(formString);
+  if (!form || !Object.keys(form).length) throw new Error('No data sent');
+  try {
+    Logger.log('Data for registering');
+    Logger.log(form);
+    const response = registerEntity('PAINTER', form);
+    Logger.log('Response');
+    Logger.log(response);
+    return response;
+  } catch (error) {
+    Logger.log('Error Registering builder');
+    Logger.log(error);
+    return error.toString();
+  }
+}
+export function createClieaner(formString) {
+  const form = JSON.parse(formString);
+  if (!form || !Object.keys(form).length) throw new Error('No data sent');
+  try {
+    Logger.log('Data for registering');
+    Logger.log(form);
+    const response = registerEntity('ClEANER', form);
+    Logger.log('Response');
+    Logger.log(response);
+    return response;
+  } catch (error) {
+    Logger.log('Error Registering builder');
+    Logger.log(error);
+    return error.toString();
+  }
+}
+
+
+
 export function createHouse(formString) {
   const form = JSON.parse(formString);
   if (!form || !Object.keys(form).length) throw new Error('No data sent');
