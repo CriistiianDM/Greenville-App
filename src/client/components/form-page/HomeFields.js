@@ -34,7 +34,7 @@ export default function HomeFields({
     if (fieldValue && fieldValue.startsWith(`Add ${table}`)) {
       fieldValue = fieldValue.substring(lengthFields).replaceAll('"', '');
       const { data: element } = await createMethod(
-        JSON.stringify({ name: fieldValue })
+        JSON.stringify({ name: fieldValue})
       );
       const tablename = table.charAt(0).toUpperCase() + table.slice(1);
       const [variant, message] = element
@@ -45,7 +45,7 @@ export default function HomeFields({
         message,
       });
     }
-    
+
     setFieldValue(table, fieldValue || '');
   };
 
@@ -55,18 +55,21 @@ export default function HomeFields({
   const handleChangeAutocompleteBuilder = (event, value, reason) => {
     handleChangeAutocomplete('builder', value, API.createBuilders, 12, reason);
   };
-  const handleChangeAutocompleteHander = (event, value, reason) => {
-    setFieldValue('hanger', value || '');
+  const handleChangeAutocompleteHanger = (event, value, reason) => {
+    handleChangeAutocomplete('hanger', value, API.createHanger, 10, reason);
   };
   const handleChangeAutocompleteFinisher = (event, value, reason) => {
-    setFieldValue('finisher', value || '');
+    handleChangeAutocomplete('finisher', value, API.createFinisher, 12, reason);
   };
+  
   const handleChangeAutocompletePaintier = (event, value, reason) => {
-    setFieldValue('painter', value || '');
+    handleChangeAutocomplete('painter', value, API.createPainter, 11, reason);
   };
+  
   const handleChangeAutocompleteClieaner = (event, value, reason) => {
-    setFieldValue('cleaner', value || '');
+    handleChangeAutocomplete('cleaner', value, API.createClieaner, 11, reason);
   };
+  
 
   const inputZone = inputProps.values.zone;
   if (inputZone) {
@@ -254,8 +257,9 @@ export default function HomeFields({
           name="hanger"
           label="Hanger"
           {...inputProps}
-          handleChange={handleChangeAutocompleteHander}
+          handleChange={handleChangeAutocompleteHanger}
           options={select_others.hangers}
+          
         />
       </Grid>
       <Grid item xs={6} md={3}>
@@ -265,6 +269,7 @@ export default function HomeFields({
             {...inputProps}
             handleChange={handleChangeAutocompleteFinisher}
             options={select_others.finisher}
+            
         />
       </Grid>
       <Grid item xs={6} md={3}>
